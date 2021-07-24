@@ -23,7 +23,11 @@ class ButtonCleanCartWidget extends StatelessWidget {
               child: Center(
                 child: Text(
                   'Limpar',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
             ),

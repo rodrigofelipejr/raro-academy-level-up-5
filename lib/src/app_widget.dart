@@ -17,7 +17,7 @@ class AppWidget extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Mobx',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.teal,
         ),
         initialRoute: '/products',
         routes: {

@@ -21,19 +21,25 @@ class ProductItemCartWidget extends StatelessWidget {
       title: Text(productCart.product.description),
       subtitle: Text('R\$ ${Formatters.formatCurrency(productCart.product.price)}'),
       leading: CircleAvatar(
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.teal[300],
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
             onPressed: onPressedRemove,
-            icon: Icon(Icons.remove_circle),
+            icon: Icon(
+              Icons.remove_circle,
+              color: Colors.red[300],
+            ),
           ),
           Text(productCart.quantity.toString()),
           IconButton(
             onPressed: onPressedAdd,
-            icon: Icon(Icons.add_circle),
+            icon: Icon(
+              Icons.add_circle,
+              color: Colors.teal[300],
+            ),
           ),
         ],
       ),

@@ -21,7 +21,9 @@ class ProductItemWidget extends StatelessWidget {
       leading: CircleAvatar(
         backgroundColor: Colors.amber,
       ),
-      trailing: product.selected ? Icon(Icons.done) : Text('R\$ ${Formatters.formatCurrency(product.price)}'),
+      trailing: product.selected
+          ? Icon(Icons.done, color: Colors.amber)
+          : Text('R\$ ${Formatters.formatCurrency(product.price)}'),
     );
   }
 }

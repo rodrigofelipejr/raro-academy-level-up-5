@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../modules.dart';
 import '../../shared/modules/modules.dart';
 import '../../shared/widgets/widgets.dart';
+import 'widget/widgets.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({Key? key}) : super(key: key);
@@ -35,28 +36,13 @@ class _ProductPageState extends State<ProductPage> {
       appBar: AppBar(
         title: Text('Products'),
         actions: [
-          IconButton(
-            onPressed: () => Navigator.pushNamed(context, '/cart'),
-            icon: Stack(
-              children: [
-                Icon(Icons.shopping_cart),
-                CircleAvatar(
-                  backgroundColor: Colors.amber,
-                  radius: 8,
-                  child: Observer(
-                    builder: (_) {
-                      return Text(
-                        cartStore.totalCartItens.toString(),
-                        style: TextStyle(
-                          fontSize: 8.0,
-                          color: Colors.black,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+          Observer(
+            builder: (_) {
+              return ButtonCartWidget(
+                onPressed: () => Navigator.pushNamed(context, '/cart'),
+                label: cartStore.totalCartItens.toString(),
+              );
+            },
           ),
         ],
       ),
