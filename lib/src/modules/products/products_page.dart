@@ -39,7 +39,7 @@ class _ProductPageState extends State<ProductPage> {
           Observer(
             builder: (_) {
               return ButtonCartWidget(
-                onPressed: () => Navigator.pushNamed(context, '/cart'),
+                onTap: () => Navigator.pushNamed(context, '/cart'),
                 label: cartStore.totalCartItens.toString(),
               );
             },
