@@ -49,7 +49,7 @@ abstract class _CartStoreBase with Store {
 
   int? productInCart(ProductModel product) {
     for (var i = 0; i < products.length; i++) {
-      if (products[i].product == product) return i;
+      if (products[i].product.id == product.id) return i;
     }
     return null;
   }
