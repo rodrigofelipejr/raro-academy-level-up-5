@@ -24,18 +24,18 @@ mixin _$CartStore on _CartStoreBase, Store {
               name: '_CartStoreBase.totalCartItens'))
           .value;
 
-  final _$_productsAtom = Atom(name: '_CartStoreBase._products');
+  final _$productsAtom = Atom(name: '_CartStoreBase.products');
 
   @override
-  ObservableList<ProductModel> get _products {
-    _$_productsAtom.reportRead();
-    return super._products;
+  ObservableList<ProductCartModel> get products {
+    _$productsAtom.reportRead();
+    return super.products;
   }
 
   @override
-  set _products(ObservableList<ProductModel> value) {
-    _$_productsAtom.reportWrite(value, super._products, () {
-      super._products = value;
+  set products(ObservableList<ProductCartModel> value) {
+    _$productsAtom.reportWrite(value, super.products, () {
+      super.products = value;
     });
   }
 
@@ -54,11 +54,11 @@ mixin _$CartStore on _CartStoreBase, Store {
   }
 
   @override
-  void removeCartItem(ProductModel product) {
+  void removeCartItem(ProductCartModel productCart) {
     final _$actionInfo = _$_CartStoreBaseActionController.startAction(
         name: '_CartStoreBase.removeCartItem');
     try {
-      return super.removeCartItem(product);
+      return super.removeCartItem(productCart);
     } finally {
       _$_CartStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -76,19 +76,9 @@ mixin _$CartStore on _CartStoreBase, Store {
   }
 
   @override
-  bool inCart(ProductModel product) {
-    final _$actionInfo = _$_CartStoreBaseActionController.startAction(
-        name: '_CartStoreBase.inCart');
-    try {
-      return super.inCart(product);
-    } finally {
-      _$_CartStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
+products: ${products},
 totalCartPrice: ${totalCartPrice},
 totalCartItens: ${totalCartItens}
     ''';

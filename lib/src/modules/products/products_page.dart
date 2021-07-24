@@ -16,19 +16,16 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   late final ProductsStore productsStore;
   late final CartStore cartStore;
-  // List<ReactionDisposer> disposers = [];
 
   @override
   void initState() {
     super.initState();
     productsStore = context.read<ProductsStore>()..fetchProducts();
     cartStore = context.read<CartStore>();
-    // disposers.add(reaction((_) => cartStore.totalCartItens, (value) => productsStore.fetchProducts()));
   }
 
   @override
   void dispose() {
-    // disposers.forEach((disposer) => dispose());
     super.dispose();
   }
 
@@ -71,7 +68,10 @@ class _ProductPageState extends State<ProductPage> {
               final product = productsStore.products[index];
               return ProductItemWidget(
                 product: product,
-                onTap: () => cartStore.addCartItem(product),
+                onTap: () {
+                  productsStore.selectedProduct(productsStore.products[index]);
+                  cartStore.addCartItem(productsStore.products[index]);
+                },
               );
             },
           );

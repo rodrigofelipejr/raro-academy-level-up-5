@@ -22,10 +22,28 @@ abstract class _ProductsStoreBase with Store {
   void addProducts(List<ProductModel> list) => products.addAll(list);
 
   @action
+  void selectedProduct(ProductModel product) => products[products.indexOf(product)] = product.copyWith(selected: true);
+
+  @action
   void cleanProducts() => products.clear();
 
-  void fetchProducts() {
-    final result = repository.fetchProductsRemote();
-    addProducts(result);
+  void fetchProducts() => addProducts(repository.fetchProductsRemote());
+
+  @action
+  void updateStoreProducts(List<ProductModel> listCart) {
+    cleanProducts();
+
+    if (listCart.isEmpty) {
+      fetchProducts();
+    } else {
+      var list = repository.fetchProductsRemote();
+
+      for (var i = 0; i < list.length; i++) {
+        if (listCart.where((e) => e.id == list[i].id).toList().isNotEmpty) {
+          list[i] = list[i].copyWith(selected: true);
+        }
+      }
+      addProducts(list);
+    }
   }
 }

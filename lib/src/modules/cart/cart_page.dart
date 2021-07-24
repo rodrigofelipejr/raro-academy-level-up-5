@@ -22,44 +22,69 @@ class _CartPageState extends State<CartPage> {
   void initState() {
     super.initState();
     cartStore = context.read<CartStore>();
+    productsStore = context.read<ProductsStore>();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cart'),
-        actions: [
-          ButtonCleanCartWidget(onTap: () {
-            cartStore.cleanCartItems();
-            context.read<ProductsStore>()
-              ..cleanProducts()
-              ..fetchProducts();
-          }),
-        ],
-      ),
-      body: Observer(
-        builder: (_) => Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: cartStore.totalCartItens,
-                itemBuilder: (_, index) {
-                  final product = cartStore.product(index);
-                  return ProductItemCartWidget(
-                    product: product,
-                    onPressedAdd: () => cartStore.addCartItem(product),
-                    onPressedRemove: () => cartStore.removeCartItem(product),
-                  );
-                },
-              ),
+    return WillPopScope(
+      onWillPop: () async {
+        productsStore.updateStoreProducts(
+          cartStore.products.map((e) => e.product).toList(),
+        );
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Cart'),
+          actions: [
+            ButtonCleanCartWidget(
+              onTap: cartStore.cleanCartItems,
             ),
-            BottomBarCartWidget(
-              totalItens: cartStore.totalCartItens,
-              totalPrice: cartStore.totalCartPrice,
-            )
           ],
         ),
+        body: cartStore.products.isEmpty
+            ? Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: Icon(
+                        Icons.shopping_cart,
+                        color: Colors.grey[400],
+                        size: 48.0,
+                      ),
+                    ),
+                    Text('Seu carrinho está vazio'),
+                  ],
+                ),
+              )
+            : Observer(
+                builder: (_) => Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: cartStore.products.length,
+                        itemBuilder: (_, index) {
+                          final productCart = cartStore.products[index];
+                          return ProductItemCartWidget(
+                            productCart: productCart,
+                            onPressedAdd: () => cartStore.addCartItem(productCart.product),
+                            onPressedRemove: () {
+                              cartStore.removeCartItem(productCart);
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                    BottomBarCartWidget(
+                      totalItens: cartStore.totalCartItens,
+                      totalPrice: cartStore.totalCartPrice,
+                    )
+                  ],
+                ),
+              ),
       ),
     );
   }

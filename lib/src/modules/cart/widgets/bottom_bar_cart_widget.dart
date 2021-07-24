@@ -6,7 +6,11 @@ class BottomBarCartWidget extends StatelessWidget {
   final int totalItens;
   final double totalPrice;
 
-  const BottomBarCartWidget({Key? key, required this.totalItens, required this.totalPrice}) : super(key: key);
+  const BottomBarCartWidget({
+    Key? key,
+    required this.totalItens,
+    required this.totalPrice,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +20,18 @@ class BottomBarCartWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Row(
-            children: [
-              Text('$totalItens'),
-              Text(totalItens > 0 ? ' itens' : ' item'),
-            ],
-          ),
+          (totalItens == 0)
+              ? Text('Nenhum item selecionado')
+              : Row(
+                  children: [
+                    Text('$totalItens'),
+                    Text('${totalItens == 1 ? ' item' : ' itens'}'),
+                  ],
+                ),
           Row(
             children: [
               Text('Total:'),
-              Text(
-                'R\$ ${Formatters.formatCurrency(totalPrice)}',
-              ),
+              Text('R\$ ${Formatters.formatCurrency(totalPrice)}'),
             ],
           ),
         ],

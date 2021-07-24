@@ -39,11 +39,33 @@ mixin _$ProductsStore on _ProductsStoreBase, Store {
   }
 
   @override
+  void selectedProduct(ProductModel product) {
+    final _$actionInfo = _$_ProductsStoreBaseActionController.startAction(
+        name: '_ProductsStoreBase.selectedProduct');
+    try {
+      return super.selectedProduct(product);
+    } finally {
+      _$_ProductsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void cleanProducts() {
     final _$actionInfo = _$_ProductsStoreBaseActionController.startAction(
         name: '_ProductsStoreBase.cleanProducts');
     try {
       return super.cleanProducts();
+    } finally {
+      _$_ProductsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void updateStoreProducts(List<ProductModel> listCart) {
+    final _$actionInfo = _$_ProductsStoreBaseActionController.startAction(
+        name: '_ProductsStoreBase.updateStoreProducts');
+    try {
+      return super.updateStoreProducts(listCart);
     } finally {
       _$_ProductsStoreBaseActionController.endAction(_$actionInfo);
     }

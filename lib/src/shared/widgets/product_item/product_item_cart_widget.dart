@@ -4,13 +4,13 @@ import '../../helpers/helpers.dart';
 import '../../models/models.dart';
 
 class ProductItemCartWidget extends StatelessWidget {
-  final ProductModel product;
+  final ProductCartModel productCart;
   final Function() onPressedAdd;
   final Function() onPressedRemove;
 
   const ProductItemCartWidget({
     Key? key,
-    required this.product,
+    required this.productCart,
     required this.onPressedAdd,
     required this.onPressedRemove,
   }) : super(key: key);
@@ -18,8 +18,8 @@ class ProductItemCartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(product.description),
-      subtitle: Text('R\$ ${Formatters.formatCurrency(product.price)}'),
+      title: Text(productCart.product.description),
+      subtitle: Text('R\$ ${Formatters.formatCurrency(productCart.product.price)}'),
       leading: CircleAvatar(
         backgroundColor: Colors.amber,
       ),
@@ -30,7 +30,7 @@ class ProductItemCartWidget extends StatelessWidget {
             onPressed: onPressedRemove,
             icon: Icon(Icons.remove_circle),
           ),
-          Text('1'),
+          Text(productCart.quantity.toString()),
           IconButton(
             onPressed: onPressedAdd,
             icon: Icon(Icons.add_circle),

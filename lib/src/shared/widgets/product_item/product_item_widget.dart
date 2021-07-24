@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../helpers/helpers.dart';
 import '../../models/models.dart';
 
-class ProductItemWidget extends StatefulWidget {
+class ProductItemWidget extends StatelessWidget {
   final ProductModel product;
   final Function() onTap;
 
@@ -14,25 +14,14 @@ class ProductItemWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ProductItemWidgetState createState() => _ProductItemWidgetState();
-}
-
-class _ProductItemWidgetState extends State<ProductItemWidget> {
-  bool _selected = false;
-
-  @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {
-        widget.onTap.call();
-        _selected = true;
-        setState(() {});
-      },
-      title: Text(widget.product.description),
+      onTap: onTap,
+      title: Text(product.description),
       leading: CircleAvatar(
-        backgroundColor: widget.product.color,
+        backgroundColor: Colors.amber,
       ),
-      trailing: _selected ? Icon(Icons.done) : Text('R\$ ${Formatters.formatCurrency(widget.product.price)}'),
+      trailing: product.selected ? Icon(Icons.done) : Text('R\$ ${Formatters.formatCurrency(product.price)}'),
     );
   }
 }

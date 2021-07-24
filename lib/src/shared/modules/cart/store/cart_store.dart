@@ -8,31 +8,49 @@ class CartStore = _CartStoreBase with _$CartStore;
 
 abstract class _CartStoreBase with Store {
   @observable
-  var _products = ObservableList<ProductModel>();
+  var products = ObservableList<ProductCartModel>();
 
   @action
   void addCartItem(ProductModel product) {
-    _products.add(product);
+    if (products.isEmpty) {
+      products.add(ProductCartModel(product: product, quantity: 1));
+      return;
+    }
+
+    final index = productInCart(product);
+
+    if (index != null) {
+      products[index] = products[index].copyWith(quantity: products[index].quantity + 1);
+    } else {
+      products.add(ProductCartModel(product: product, quantity: 1));
+    }
   }
 
   @action
-  void removeCartItem(ProductModel product) {
-    _products.remove(product);
+  void removeCartItem(ProductCartModel productCart) {
+    if (productCart.quantity == 1) {
+      products.remove(productCart);
+    } else {
+      final index = products.indexOf(productCart);
+      products[index] = products[index].copyWith(quantity: productCart.quantity - 1);
+    }
   }
 
   @action
   void cleanCartItems() {
-    _products.clear();
+    products.clear();
   }
 
-  ProductModel product(int index) => _products[index];
-
-  @action
-  bool inCart(ProductModel product) => _products.contains(product);
+  @computed
+  double get totalCartPrice => products.fold(0, (total, item) => total += (item.quantity * item.product.price));
 
   @computed
-  double get totalCartPrice => _products.fold(0, (total, c) => total += c.price);
+  int get totalCartItens => products.length;
 
-  @computed
-  int get totalCartItens => _products.length;
+  int? productInCart(ProductModel product) {
+    for (var i = 0; i < products.length; i++) {
+      if (products[i].product == product) return i;
+    }
+    return null;
+  }
 }
