@@ -5,7 +5,7 @@ import '../../../shared/models/models.dart';
 class ProductRepository {
   List<ProductModel> fetchProductsRemote() {
     return List.generate(
-      2,
+      20,
       (index) => ProductModel(
         id: ++index,
         description: 'Product $index',
